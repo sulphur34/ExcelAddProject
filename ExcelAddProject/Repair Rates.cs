@@ -15,8 +15,69 @@ namespace ExcelAddProject
         public RepairForm()
         {
             InitializeComponent();
+            rbAll.Checked = true;
+            dateTimePicker2.Value = new DateTime(2018, 1, 1);
+            dateTimePicker1.Value = DateTime.Today;
+
+        }
+        string ProdObject = "All";
+        bool WBcalc = false;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+            RepairRates.PrintRates(dateTimePicker2.Value, dateTimePicker1.Value, ProdObject, WBcalc, cbOfficial.Checked, cbDiameter.Checked, cbRepairValid.Checked, cbVolume.Checked);
+            this.WindowState = FormWindowState.Normal;
         }
 
-        
+        private void rbAll_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            if (radioButton.Checked)
+            {
+                ProdObject = "All";
+            }
+
+        }
+
+        private void rbErection_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            if (radioButton.Checked)
+            {
+                ProdObject = "Erection";
+            }
+        }
+
+        private void rbWorkshop_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton radioButton = (RadioButton)sender;
+            if (radioButton.Checked)
+            {
+                ProdObject = "Workshop";
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked)
+                WBcalc = true;
+            else
+                WBcalc = false;
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

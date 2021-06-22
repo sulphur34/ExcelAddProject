@@ -20,9 +20,12 @@ namespace ExcelAddProject
         <tabs>
           <tab id='tab1' label='Sharp Welder'>
             <group id='Test' label='Test Functions'>
-              <button id='button1' imageMso='Coffee' label='First Button' onAction='OnButtonPressed' size='large'/>
+              <button id='button1' imageMso='DatabaseAccessBackEnd' label='Первые три товарных' onAction='OnButtonPressed' size='large'/>
               <button id='Weld_Data' imageMso='ModuleInsert' label='Прересчет WB' onAction='OnButtonPressed2' size='large'/>
               <button id='Print_Rates' imageMso='Chart3DPieChart' label='Посчитать брак' onAction='OnButtonPressed3' size='large'/>
+              <button id='Print_Rates_COK' imageMso='DataSourceCatalogSOAP' label='Посчитать брак ЦОК' onAction='OnButtonPressed4' size='large'/>
+              <button id='Print_Rates_COK' imageMso='DataSourceCatalogSOAP' label='Посчитать брак ЦОК' onAction='OnButtonPressed4' size='large'/>
+              <button id='Print_Rates_Time' imageMso='ReviewDeleteAllMarkupInPresentation' label='Таймлайн' onAction='OnButtonPressed5' size='large'/>
             </group >
           </tab>
         </tabs>
@@ -32,15 +35,29 @@ namespace ExcelAddProject
         
         public void OnButtonPressed(IRibbonControl control)
         {
-            //Form1();
+            RepairRates.PrintFirstThree();
         }
         public void OnButtonPressed2(IRibbonControl control)
         {
-            RepairRates.WeldData();
+            RepairRates.WeldData(true, true);
         }
         public void OnButtonPressed3(IRibbonControl control)
         {
-            RepairRates.PrintRates();
+            RepairForm FormRepair = new RepairForm();
+            FormRepair.Show();
+            //RepairRates.PrintRates();
+        }
+        public void OnButtonPressed4(IRibbonControl control)
+        {
+            COKReport COKReport = new COKReport();
+            COKReport.Show();
+            //RepairRates.PrintRates();
+        }
+        public void OnButtonPressed5(IRibbonControl control)
+        {
+            Timeline timeline = new Timeline();
+            timeline.Show();
+            //RepairRates.PrintRates();
         }
     }
 }

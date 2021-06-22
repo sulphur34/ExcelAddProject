@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="COKReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="COKReport.Designer.cs">
+      <DependentUpon>COKReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repair Rates.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +83,12 @@
     <Compile Include="Ribbon.cs" />
     <Compile Include="ExcelFuctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Timeline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Timeline.Designer.cs">
+      <DependentUpon>Timeline.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ExcelAddProject-AddIn.dna">
@@ -86,8 +98,14 @@
     <None Include="Properties\ExcelDna.Build.props" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="COKReport.resx">
+      <DependentUpon>COKReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Repair Rates.resx">
       <DependentUpon>Repair Rates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Timeline.resx">
+      <DependentUpon>Timeline.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
