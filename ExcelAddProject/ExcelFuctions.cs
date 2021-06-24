@@ -154,7 +154,7 @@ namespace ExcelAddProject
             }
             return WBook;
         }
-        public static List<Welder> WeldersRates(bool WBcalc, bool Official, bool NoDiameter, bool EachWelder = )
+        public static List<Welder> WeldersRates(bool WBcalc, bool Official, bool NoDiameter)
         {
             List<Weld> WBook = WeldData(WBcalc, Official);
             List<Welder> WelderBase = new List<Welder>();
@@ -372,7 +372,10 @@ namespace ExcelAddProject
             }            
             for (int i = 0; i <= WelderBase.Count - 1 ; i++)
             {
-                for (int j = 0; j < WelderBase[i].WelderWelds.Count-1 & j <= 10; j++)
+                ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 1] = i;
+                ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 2] = WelderBase[i].WeldersName;
+                ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 3] = WelderBase[i].Stamp;
+                for (int j = 0; j < WelderBase[i].WelderWelds.Count-1 & j <= 9; j++)
                 {
                     ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 7 + j * 3 - 3] = WelderBase[i].WelderWelds[j].Result;
                     ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 8 + j * 3 - 3] = WelderBase[i].WelderWelds[j].RTProtNum;
