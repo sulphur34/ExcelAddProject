@@ -24,7 +24,7 @@ namespace ExcelAddProject
               <button id='Weld_Data' imageMso='ModuleInsert' label='Прересчет WB' onAction='OnButtonPressed2' size='large'/>
               <button id='Print_Rates' imageMso='Chart3DPieChart' label='Посчитать брак' onAction='OnButtonPressed3' size='large'/>
               <button id='Print_Rates_COK' imageMso='DataSourceCatalogSOAP' label='Посчитать брак ЦОК' onAction='OnButtonPressed4' size='large'/>
-              <button id='Test1' imageMso='ReviewDeleteAllMarkupInPresentation' label='Тест' onAction='OnButtonPressed5' size='large'/>
+              <button id='Print_Quals' imageMso='ReviewDeleteAllMarkupInPresentation' label='Квалификации' onAction='OnButtonPressed6' size='large'/>
               <button id='Print_Rates_Time' imageMso='ReviewDeleteAllMarkupInPresentation' label='Таймлайн' onAction='OnButtonPressed5' size='large'/>
             </group >
           </tab>
@@ -58,6 +58,10 @@ namespace ExcelAddProject
             Timeline timeline = new Timeline();
             timeline.Show();
             //RepairRates.PrintRates();
+        }
+        public void OnButtonPressed6(IRibbonControl control)
+        {
+            RepairRates.PrintQuals(RepairRates.CountQuals(RepairRates.WeldersQuals(WeldersQualifications.GetQuals(), RepairRates.WelderNameFiller("Qual summary"))));
         }
     }
 }

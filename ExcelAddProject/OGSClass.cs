@@ -59,6 +59,7 @@ namespace ExcelAddProject
         public List<KSS> TestKSS = new List<KSS>();
         public List<RatesContainer> WelderRates = new List<RatesContainer>(16);
         public List<TimelineRates> TimelineRates = new List<TimelineRates>();
+        public List<QualSimp> QualSimpl = new List<QualSimp>();
         public Welder()
         {
             for (int i = 0; i < 16; i++)
@@ -145,6 +146,23 @@ namespace ExcelAddProject
         public string Bend;
         public string Macro;
     }
+    public class QualSimp
+    {
+        public string WelderName;
+        public string Stamp;
+        public string DLname;
+        public DateTime Dlstart;
+        public DateTime Dlend;
+        public string KSSProcess;
+        public string WelderProcess;
+        public string WeldLayers;
+        public string Position;
+        public QualDimentions QualDimentions = new QualDimentions();
+        public QualPositions QualPositions = new QualPositions();
+        public QualMaterials QualMaterials = new QualMaterials();
+        public string MaterialGroup;
+        public string ObjectType;
+    }
     public class Qualification
     {
         public string WelderName;
@@ -174,10 +192,10 @@ namespace ExcelAddProject
     }
     public class QualDimentions
     {
-        public object DiameterMin;
-        public object DiameterMax;
-        public object ThiknessMin;
-        public object ThiknessMax;
+        public double DiameterMin;
+        public double DiameterMax;
+        public double ThiknessMin;
+        public double ThiknessMax;
         //public QualDimentions GetQualDim(double Diameter, double Thikness, string Procedure)
         //    {        
         //    }
