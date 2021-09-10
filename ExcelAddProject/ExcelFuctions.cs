@@ -133,6 +133,7 @@ namespace ExcelAddProject
             for (int i = 1; i < WBarray.GetUpperBound(0); i++)
             {
                 WBook.Add(new Weld());
+                WBook[i - 1].WeldDiamInch = (double)WBarray[i, 7];
                 WBook[i - 1].DrawingNum = Convert.ToString(WBarray[i, 8]);
                 WBook[i - 1].ISONum = Convert.ToString(WBarray[i, 9]);
                 WBook[i - 1].WeldNumber = Convert.ToString(WBarray[i, 26]);
@@ -455,11 +456,13 @@ namespace ExcelAddProject
             }
             xlApp.DisplayAlerts = true;
         }
-        public static Dictionary<string, RatesContainerCOK> CountRatesCOK(DateTime StartDate, DateTime EndDate, List<Weld> WBook)
+        public static Dictionary<string, RatesContainerCOK> CountRatesCOK(DateTime StartDate, DateTime EndDate, List<Weld> WBook, bool InchCount)
         {
             Dictionary<string, RatesContainerCOK> RatesContainerCOKAll = new Dictionary<string, RatesContainerCOK>();
             List<string> Materials = new List<string> { "LTCS", "SS", "F22", "ALLOY" };
             List<string> Objects = new List<string> { "Workshop", "Erection" };
+            double inchcounter = 1;
+
             foreach (string Material in Materials)
             {
                 foreach (string Object in Objects)
@@ -467,24 +470,28 @@ namespace ExcelAddProject
                     RatesContainerCOKAll.Add(Material + Object, new RatesContainerCOK());
                 }
             }
-            foreach (Weld weld in WBook)
+            foreach (Weld weld in WBook)                
             {
+                if (InchCount)
+                {
+                    inchcounter = weld.WeldDiamInch;
+                }
                 foreach (string Material in Materials)
                 {
                     foreach (string Object in Objects)
                     {
                         if (weld.EndDate <= EndDate && weld.EndDate >= StartDate && weld.IsRepair == false && weld.WeldMaterial.ToString().Contains(Material) && weld.Object.ToString() == Object)
                         {
-                            RatesContainerCOKAll[Material + Object].Overall = RatesContainerCOKAll[Material + Object].Overall + 1;
+                            RatesContainerCOKAll[Material + Object].Overall = RatesContainerCOKAll[Material + Object].Overall + 1* inchcounter;
                             if (weld.NDEcontrol)
                             {
-                                RatesContainerCOKAll[Material + Object].NDEOverall = RatesContainerCOKAll[Material + Object].NDEOverall + 1;
+                                RatesContainerCOKAll[Material + Object].NDEOverall = RatesContainerCOKAll[Material + Object].NDEOverall + 1 * inchcounter;
                                 if (weld.Result.ToString() != "0")
                                 {
-                                    RatesContainerCOKAll[Material + Object].NDEDone = RatesContainerCOKAll[Material + Object].NDEDone + 1;
+                                    RatesContainerCOKAll[Material + Object].NDEDone = RatesContainerCOKAll[Material + Object].NDEDone + 1 * inchcounter;
                                     if (weld.Result.ToString() == "cutout" || weld.Result.ToString() == "repair")
                                     {
-                                        RatesContainerCOKAll[Material + Object].NDEReject = RatesContainerCOKAll[Material + Object].NDEReject + 1;
+                                        RatesContainerCOKAll[Material + Object].NDEReject = RatesContainerCOKAll[Material + Object].NDEReject + 1 * inchcounter;
                                     }
                                 }
                             }

@@ -9,10 +9,10 @@ namespace ExcelAddProject
 {
     public class RatesContainerCOK
     {
-        public int Overall = 0;
-        public int NDEOverall = 0;
-        public int NDEDone = 0;
-        public int NDEReject = 0;
+        public double Overall = 0;
+        public double NDEOverall = 0;
+        public double NDEDone = 0;
+        public double NDEReject = 0;
     }
 
     public class RatesContainer
@@ -87,7 +87,7 @@ namespace ExcelAddProject
         public object ISONum, DrawingNum, WeldNumber, WeldMaterial, RTProtNum, UTProtNum, WeldProcess, Result, RTDate, UTDate, Object;
         public bool NDEcontrol, IsRepair;
         public List<string> Welders, WeldersToBlame = new List<string>();
-        public double WeldDiam, WeldThick;
+        public double WeldDiam, WeldThick, WeldDiamInch;
         public DateTime EndDate = new DateTime();
     }
     public class KSS

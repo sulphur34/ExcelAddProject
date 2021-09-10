@@ -35,10 +35,11 @@
             this.cbWBCount = new System.Windows.Forms.CheckBox();
             this.bCountReject = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbRange = new System.Windows.Forms.RadioButton();
-            this.rbMonth = new System.Windows.Forms.RadioButton();
-            this.dtpMonth = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
+            this.dtpMonth = new System.Windows.Forms.DateTimePicker();
+            this.rbMonth = new System.Windows.Forms.RadioButton();
+            this.rbRange = new System.Windows.Forms.RadioButton();
+            this.cbDiameter = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,17 +114,24 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             // 
-            // rbRange
+            // label3
             // 
-            this.rbRange.AutoSize = true;
-            this.rbRange.Location = new System.Drawing.Point(24, 85);
-            this.rbRange.Name = "rbRange";
-            this.rbRange.Size = new System.Drawing.Size(96, 17);
-            this.rbRange.TabIndex = 0;
-            this.rbRange.TabStop = true;
-            this.rbRange.Text = "Диапазон дат";
-            this.rbRange.UseVisualStyleBackColor = true;
-            this.rbRange.CheckedChanged += new System.EventHandler(this.rbRange_CheckedChanged);
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(21, 39);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(119, 17);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Отчетный месяц";
+            // 
+            // dtpMonth
+            // 
+            this.dtpMonth.CustomFormat = "MMMMyyyy";
+            this.dtpMonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpMonth.Location = new System.Drawing.Point(24, 59);
+            this.dtpMonth.Name = "dtpMonth";
+            this.dtpMonth.Size = new System.Drawing.Size(116, 20);
+            this.dtpMonth.TabIndex = 18;
             // 
             // rbMonth
             // 
@@ -137,30 +145,34 @@
             this.rbMonth.UseVisualStyleBackColor = true;
             this.rbMonth.CheckedChanged += new System.EventHandler(this.rbMonth_CheckedChanged);
             // 
-            // dtpMonth
+            // rbRange
             // 
-            this.dtpMonth.CustomFormat = "MMMMyyyy";
-            this.dtpMonth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpMonth.Location = new System.Drawing.Point(24, 59);
-            this.dtpMonth.Name = "dtpMonth";
-            this.dtpMonth.Size = new System.Drawing.Size(116, 20);
-            this.dtpMonth.TabIndex = 18;
+            this.rbRange.AutoSize = true;
+            this.rbRange.Location = new System.Drawing.Point(24, 85);
+            this.rbRange.Name = "rbRange";
+            this.rbRange.Size = new System.Drawing.Size(96, 17);
+            this.rbRange.TabIndex = 0;
+            this.rbRange.TabStop = true;
+            this.rbRange.Text = "Диапазон дат";
+            this.rbRange.UseVisualStyleBackColor = true;
+            this.rbRange.CheckedChanged += new System.EventHandler(this.rbRange_CheckedChanged);
             // 
-            // label3
+            // cbDiameter
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(21, 39);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(119, 17);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Отчетный месяц";
+            this.cbDiameter.AutoSize = true;
+            this.cbDiameter.Location = new System.Drawing.Point(152, 176);
+            this.cbDiameter.Name = "cbDiameter";
+            this.cbDiameter.Size = new System.Drawing.Size(126, 17);
+            this.cbDiameter.TabIndex = 19;
+            this.cbDiameter.Text = "Учитывать дюймаж";
+            this.cbDiameter.UseVisualStyleBackColor = true;
             // 
             // COKReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(341, 265);
+            this.Controls.Add(this.cbDiameter);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bCountReject);
             this.Controls.Add(this.cbWBCount);
@@ -186,5 +198,6 @@
         private System.Windows.Forms.DateTimePicker dtpMonth;
         private System.Windows.Forms.RadioButton rbMonth;
         private System.Windows.Forms.RadioButton rbRange;
+        private System.Windows.Forms.CheckBox cbDiameter;
     }
 }
