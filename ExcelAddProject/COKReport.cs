@@ -58,10 +58,10 @@ namespace ExcelAddProject
         private void bCountReject_Click(object sender, EventArgs e)
         {
             List<Weld> WBbase = RepairRates.WeldData(cbWBCount.Checked, false);
-            if (rbMonth.Checked) RepairRates.PrintratesCOK(RepairRates.CountRatesCOK(dtpStart.Value, dtpMonth.Value.AddMonths(1).AddDays(-1), WBbase), RepairRates.CountRatesCOK(dtpMonth.Value, dtpMonth.Value.AddMonths(1).AddDays(-1),
-                                 WBbase));
-            else RepairRates.PrintratesCOK(RepairRates.CountRatesCOK(dtpStart.Value, dtpEnd.Value, WBbase), RepairRates.CountRatesCOK(dtpMonth.Value, dtpEnd.Value,
-                                 WBbase));
+            if (rbMonth.Checked) RepairRates.PrintratesCOK(RepairRates.CountRatesCOK(dtpStart.Value, dtpMonth.Value.AddMonths(1).AddDays(-1), WBbase, cbDiameter.Checked), RepairRates.CountRatesCOK(dtpMonth.Value, dtpMonth.Value.AddMonths(1).AddDays(-1),
+                                 WBbase, cbDiameter.Checked));
+            else RepairRates.PrintratesCOK(RepairRates.CountRatesCOK(dtpStart.Value, dtpEnd.Value, WBbase, cbDiameter.Checked), RepairRates.CountRatesCOK(dtpMonth.Value, dtpEnd.Value,
+                                 WBbase, cbDiameter.Checked));
         }
     }
 
