@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
@@ -126,7 +127,7 @@ namespace ExcelAddProject
             //    WBook[i].UTDate = WeldingBook.DataBodyRange[i + 1, 5].Value2;
             //    WBook[i].Result = WeldingBook.DataBodyRange[i + 1, 54].Value2;
             //}
-            int Result = 54;
+            int Result = 55;
             if (Official) Result = 18;
 
 
@@ -137,21 +138,21 @@ namespace ExcelAddProject
                 WBook[i - 1].DrawingNum = Convert.ToString(WBarray[i, 8]);
                 WBook[i - 1].ISONum = Convert.ToString(WBarray[i, 9]);
                 WBook[i - 1].WeldNumber = Convert.ToString(WBarray[i, 26]);
-                WBook[i - 1].EndDate = (DateTime)WBarray[i, 65];
+                WBook[i - 1].EndDate = (DateTime)WBarray[i, 66];
                 WBook[i - 1].WeldMaterial = Convert.ToString(WBarray[i, 11]);
-                WBook[i - 1].WeldDiam = (double)WBarray[i, 58];
-                WBook[i - 1].WeldThick = (double)WBarray[i, 59];
-                WBook[i - 1].WeldProcess = Convert.ToString(WBarray[i, 57]);
-                WBook[i - 1].Welders = WeldersSeparator((string)WBarray[i, 55]);
-                WBook[i - 1].WeldersToBlame = WeldersSeparator((string)WBarray[i, 56]);
+                WBook[i - 1].WeldDiam = (double)WBarray[i, 59];
+                WBook[i - 1].WeldThick = (double)WBarray[i, 60];
+                WBook[i - 1].WeldProcess = Convert.ToString(WBarray[i, 58]);
+                WBook[i - 1].Welders = WeldersSeparator((string)WBarray[i, 56]);
+                WBook[i - 1].WeldersToBlame = WeldersSeparator((string)WBarray[i, 57]);
                 WBook[i - 1].RTProtNum = Convert.ToString(WBarray[i, 20]);
                 WBook[i - 1].UTProtNum = Convert.ToString(WBarray[i, 24]);
                 WBook[i - 1].RTDate = Convert.ToString(WBarray[i, 4]);
                 WBook[i - 1].UTDate = Convert.ToString(WBarray[i, 5]);
-                WBook[i - 1].NDEcontrol = (bool)WBarray[i, 69];
+                WBook[i - 1].NDEcontrol = (bool)WBarray[i, 70];
                 WBook[i - 1].Result = Convert.ToString(WBarray[i, Result]);
-                WBook[i - 1].Object = Convert.ToString(WBarray[i, 64]);
-                WBook[i - 1].IsRepair = (bool)WBarray[i, 71];
+                WBook[i - 1].Object = Convert.ToString(WBarray[i, 65]);
+                WBook[i - 1].IsRepair = (bool)WBarray[i, 72];
             }
             return WBook;
         }
@@ -262,7 +263,7 @@ namespace ExcelAddProject
             return WelderBase;
         }
         public static string[,] CountQuals(List<Welder> WelderBase)
-        {            
+        {
             Application xlApp = (Application)ExcelDnaUtil.Application;
             xlApp.DisplayAlerts = false;
             Workbook wb = xlApp.Workbooks["Repair Rate Sharp.xlsb"];
@@ -271,9 +272,9 @@ namespace ExcelAddProject
             var ParArray = (object[,])ws.get_Range("B14:P17").Value;
             string[,] DataString = new string[WelderBase.Count, ParArray.GetLength(1)];
             for (int j = 0; j < WelderBase.Count - 1; j++)
-            {                
+            {
                 foreach (QualSimp qual in WelderBase[j].QualSimpl)
-                {                    
+                {
                     for (int i = 0; i < ParArray.GetLength(1); i++)
                     {
                         if (((String)ParArray[1, i + 1]).Contains(qual.MaterialGroup) && (String)ParArray[2, i + 1] == qual.KSSProcess && ((String)ParArray[3, i + 1]).Contains(qual.Position) && (double)ParArray[4, i + 1] <= (double)qual.QualDimentions.DiameterMin)
@@ -314,7 +315,7 @@ namespace ExcelAddProject
                 wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Repair Rate Sharp.xlsb");
             }
             Worksheet ws = new Worksheet();
-            ws = wb.Worksheets["Timeline"];            
+            ws = wb.Worksheets["Timeline"];
             Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
             Range Weldersrange = ws.get_Range("A6:B6", last);
             var WeldersArray = (object[,])Weldersrange.Value;
@@ -424,7 +425,7 @@ namespace ExcelAddProject
         }
         public static void PrintratesCOK(Dictionary<string, RatesContainerCOK> RatesContainerCOKAll, Dictionary<string, RatesContainerCOK> RatesContainerCOKMonth)
         {
-            int i=7;
+            int i = 7;
             Application xlApp = (Application)ExcelDnaUtil.Application;
             xlApp.DisplayAlerts = false;
             Workbook wb;
@@ -438,7 +439,7 @@ namespace ExcelAddProject
             }
             ((Worksheet)wb.Worksheets["ПБР Тенгиз"]).Activate();
             foreach (KeyValuePair<string, RatesContainerCOK> RatesContainer in RatesContainerCOKMonth)
-            {            
+            {
                 ((Worksheet)wb.Worksheets["ПБР Тенгиз"]).Cells[i, 5] = RatesContainer.Value.Overall;
                 ((Worksheet)wb.Worksheets["ПБР Тенгиз"]).Cells[i, 6] = RatesContainer.Value.NDEOverall;
                 ((Worksheet)wb.Worksheets["ПБР Тенгиз"]).Cells[i, 8] = RatesContainer.Value.NDEDone;
@@ -470,7 +471,7 @@ namespace ExcelAddProject
                     RatesContainerCOKAll.Add(Material + Object, new RatesContainerCOK());
                 }
             }
-            foreach (Weld weld in WBook)                
+            foreach (Weld weld in WBook)
             {
                 if (InchCount)
                 {
@@ -482,7 +483,7 @@ namespace ExcelAddProject
                     {
                         if (weld.EndDate <= EndDate && weld.EndDate >= StartDate && weld.IsRepair == false && weld.WeldMaterial.ToString().Contains(Material) && weld.Object.ToString() == Object)
                         {
-                            RatesContainerCOKAll[Material + Object].Overall = RatesContainerCOKAll[Material + Object].Overall + 1* inchcounter;
+                            RatesContainerCOKAll[Material + Object].Overall = RatesContainerCOKAll[Material + Object].Overall + 1 * inchcounter;
                             if (weld.NDEcontrol)
                             {
                                 RatesContainerCOKAll[Material + Object].NDEOverall = RatesContainerCOKAll[Material + Object].NDEOverall + 1 * inchcounter;
@@ -511,14 +512,14 @@ namespace ExcelAddProject
             ((Worksheet)wb.Worksheets["First Three"]).Activate();
             foreach (Welder welder in WelderBase)
             {
-                welder.WelderWelds.Sort((x, y) => DateTime.Compare(x.EndDate, y.EndDate));                
-            }            
-            for (int i = 0; i < WelderBase.Count - 1 ; i++)
+                welder.WelderWelds.Sort((x, y) => DateTime.Compare(x.EndDate, y.EndDate));
+            }
+            for (int i = 0; i < WelderBase.Count - 1; i++)
             {
-                ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 1] = i+1;
+                ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 1] = i + 1;
                 ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 2] = WelderBase[i].WeldersName;
                 ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 3] = WelderBase[i].Stamp;
-                for (int j = 0; j < WelderBase[i].WelderWelds.Count-1 & j <= 9; j++)
+                for (int j = 0; j < WelderBase[i].WelderWelds.Count - 1 & j <= 9; j++)
                 {
                     ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 7 + j * 3 - 3] = WelderBase[i].WelderWelds[j].Result;
                     ((Worksheet)wb.Worksheets["First Three"]).Cells[i + 8, 8 + j * 3 - 3] = WelderBase[i].WelderWelds[j].RTProtNum;
@@ -543,64 +544,64 @@ namespace ExcelAddProject
                     if (NoRepair) Repair = false;
                     else Repair = weld.IsRepair;
                     if (NoDiameter) Diameter = true;
-                        if (DateMIN <= weld.EndDate && DateMAX >= weld.EndDate && (ProdObject == "All" || ProdObject == (string)weld.Object) && Repair != true)
-                            {                       
-                                welder.WelderRates[0].Overall = welder.WelderRates[0].Overall + 1* VolumeCount;
+                    if (DateMIN <= weld.EndDate && DateMAX >= weld.EndDate && (ProdObject == "All" || ProdObject == (string)weld.Object) && Repair != true)
+                    {
+                        welder.WelderRates[0].Overall = welder.WelderRates[0].Overall + 1 * VolumeCount;
+                        if (weld.NDEcontrol)
+                        {
+                            switch (weld.Result)
+                            {
+                                case "accepted":
+                                    welder.WelderRates[0].Accept = welder.WelderRates[0].Accept + 1 * VolumeCount;
+                                    break;
+                                case "repair":
+                                    if (weld.WeldersToBlame.Contains(welder.Stamp))
+                                    {
+                                        welder.WelderRates[0].Repair = welder.WelderRates[0].Repair + 1 * VolumeCountR;
+                                    }
+                                    break;
+                                case "cutout":
+                                    if (weld.WeldersToBlame.Contains(welder.Stamp))
+                                    {
+                                        welder.WelderRates[0].Cutout = welder.WelderRates[0].Cutout + 1 * VolumeCount;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        for (int i = 1; i < ParArray.GetUpperBound(1) + 1; i++)
+                        {
+                            if (((string)weld.WeldMaterial).Contains((string)ParArray[1, i]) && (string)ParArray[2, i] == (string)weld.WeldProcess &&
+                                (Diameter || ((double)ParArray[3, i] < weld.WeldDiam && (double)ParArray[4, i] >= weld.WeldDiam)) && Repair != true)
+                            {
+                                welder.WelderRates[i].Overall = welder.WelderRates[i].Overall + 1 * VolumeCount;
                                 if (weld.NDEcontrol)
                                 {
                                     switch (weld.Result)
                                     {
                                         case "accepted":
-                                            welder.WelderRates[0].Accept = welder.WelderRates[0].Accept + 1 * VolumeCount;
+                                            welder.WelderRates[i].Accept = welder.WelderRates[i].Accept + 1 * VolumeCount;
                                             break;
                                         case "repair":
                                             if (weld.WeldersToBlame.Contains(welder.Stamp))
                                             {
-                                                welder.WelderRates[0].Repair = welder.WelderRates[0].Repair + 1 * VolumeCountR;
+                                                welder.WelderRates[i].Repair = welder.WelderRates[i].Repair + 1 * VolumeCountR;
                                             }
                                             break;
                                         case "cutout":
                                             if (weld.WeldersToBlame.Contains(welder.Stamp))
                                             {
-                                                welder.WelderRates[0].Cutout = welder.WelderRates[0].Cutout + 1 * VolumeCount;
+                                                welder.WelderRates[i].Cutout = welder.WelderRates[i].Cutout + 1 * VolumeCount;
                                             }
                                             break;
                                         default:
                                             break;
                                     }
                                 }
-                                for (int i = 1; i < ParArray.GetUpperBound(1) + 1; i++)
-                                {                                   
-                                        if (((string)weld.WeldMaterial).Contains((string)ParArray[1, i]) && (string)ParArray[2, i] == (string)weld.WeldProcess && 
-                                            (Diameter || ((double)ParArray[3, i] < weld.WeldDiam && (double)ParArray[4, i] >= weld.WeldDiam)) && Repair != true)
-                                        {
-                                            welder.WelderRates[i].Overall = welder.WelderRates[i].Overall + 1 * VolumeCount;
-                                            if (weld.NDEcontrol)
-                                            {
-                                                switch (weld.Result)
-                                                {
-                                                    case "accepted":
-                                                        welder.WelderRates[i].Accept = welder.WelderRates[i].Accept + 1 * VolumeCount;
-                                                        break;
-                                                    case "repair":
-                                                        if (weld.WeldersToBlame.Contains(welder.Stamp))
-                                                        {
-                                                            welder.WelderRates[i].Repair = welder.WelderRates[i].Repair + 1 * VolumeCountR;
-                                                        }
-                                                        break;
-                                                    case "cutout":
-                                                        if (weld.WeldersToBlame.Contains(welder.Stamp))
-                                                        {
-                                                            welder.WelderRates[i].Cutout = welder.WelderRates[i].Cutout + 1 * VolumeCount;
-                                                        }
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-                                            }
-                                        }
-                                }
-                        } 
+                            }
+                        }
+                    }
                 }
             }
             return WelderBase;
@@ -609,10 +610,10 @@ namespace ExcelAddProject
         {
             switch (Material)
             {
-                case "P.№1": 
+                case "P.№1":
                     Material = "LTCS";
                     break;
-                case "P.№8": 
+                case "P.№8":
                     Material = "SS";
                     break;
                 case "P.№5A":
@@ -631,7 +632,7 @@ namespace ExcelAddProject
             return Material;
         }
         public static Welder CountRatesTimeline(string Material, Welder Welder, List<KSS> QualKSS, List<KSS> TestKSS, DateTime DateMIN, DateTime DateMAX)
-        {            
+        {
             DateTime MinimumDate = DateMIN;
             foreach (KSS TempKSS in QualKSS)
             {
@@ -704,7 +705,7 @@ namespace ExcelAddProject
             return Welder;
         }
         public static List<Welder> TimelineCount(DateTime DateMIN, DateTime DateMAX, string Material, bool WBcalc, bool Official)
-        {            
+        {
             List<KSS> QualKSS = WeldersQualifications.GetKSSes(false);
             List<KSS> TestKSS = WeldersQualifications.GetKSSes(true);
             List<Welder> WelderBase = WeldersRatesTL(WBcalc, Official);
@@ -713,7 +714,7 @@ namespace ExcelAddProject
             WelderBase = WelderKSS(WelderBase, TestKSS, true);
             WelderBase = WelderKSS(WelderBase, QualKSS, false);
             for (int i = -1; DateMIN.AddDays(i) < DateMAX; i = i + 7)
-            {                       
+            {
                 foreach (Welder welder in WelderBase)
                 {
                     welder.TimelineRates.Add(new TimelineRates());
@@ -722,11 +723,11 @@ namespace ExcelAddProject
                 }
                 count = count + 1;
             }
-                for (int i = 0; i < WelderBase.Count; i++)
-                {
+            for (int i = 0; i < WelderBase.Count; i++)
+            {
                 WelderBase[i] = CountRatesTimeline(Material, WelderBase[i], QualKSS, TestKSS, DateMIN, DateMAX);
-                }
-                return WelderBase;
+            }
+            return WelderBase;
         }
         public static void PrintTimeline(List<Welder> WelderBase)
         {
@@ -753,7 +754,7 @@ namespace ExcelAddProject
                 {
                     if (weld.Stamp.Contains((string)WelderUnit.Stamp))
                     {
-                        if(istest)WelderUnit.TestKSS.Add(weld);
+                        if (istest) WelderUnit.TestKSS.Add(weld);
                         else WelderUnit.QualKSS.Add(weld);
                     }
                 }
@@ -766,6 +767,7 @@ namespace ExcelAddProject
             UniqWelders = WeldersString.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList();
             return UniqWelders;
         }
+        
     }
     public class WeldersQualifications
     {
@@ -781,12 +783,12 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06.xlsb", Password: "123", ReadOnly:true);
+                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06.xlsb", Password: "123", ReadOnly: true);
             }
             Worksheet ws = wb.Worksheets["QualList"];
             Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
             var QualArray = (object[,])(ws.get_Range("C11:AU11", last)).Value;
-            int count=0;
+            int count = 0;
             for (int i = 1; i < QualArray.GetUpperBound(0) - 1; i++)
             {
                 if ((string)QualArray[i, 45] == "Допуск активен")
@@ -799,19 +801,19 @@ namespace ExcelAddProject
                     QualBase[count].Dlstart = (DateTime)QualArray[i, 8];
                     QualBase[count].KSSProcess = Convert.ToString(QualArray[i, 9]);
                     QualBase[count].WelderProcess = Convert.ToString(QualArray[i, 10]);
-                    if (Convert.ToString(QualArray[i, 31]) == "") QualArray[i, 31] = 0; 
+                    if (Convert.ToString(QualArray[i, 31]) == "") QualArray[i, 31] = 0;
                     if (Convert.ToString(QualArray[i, 16]) == "") QualArray[i, 16] = 0;
                     QualBase[count].QualDimentions.DiameterMin = Convert.ToDouble(QualArray[i, 31]);
                     QualBase[count].QualDimentions.ThiknessMin = Convert.ToDouble(QualArray[i, 16]);
                     if (Convert.ToString(QualArray[i, 19]) == "unl") QualArray[i, 19] = 999;
                     if (Convert.ToString(QualArray[i, 19]) == "") QualArray[i, 19] = 0;
-                    if (Convert.ToString(QualArray[i, 17]) == "") QualArray[i, 17] = 0;                    
-                    QualBase[count].QualDimentions.ThiknessMax = Convert.ToDouble(QualArray[i, 17])+ Convert.ToDouble(QualArray[i, 19]);
+                    if (Convert.ToString(QualArray[i, 17]) == "") QualArray[i, 17] = 0;
+                    QualBase[count].QualDimentions.ThiknessMax = Convert.ToDouble(QualArray[i, 17]) + Convert.ToDouble(QualArray[i, 19]);
                     QualBase[count].MaterialGroup = Convert.ToString(QualArray[i, 41]);
                     count++;
-                }              
+                }
             }
-                return QualBase;
+            return QualBase;
         }
         public static List<KSS> GetKSSes(bool istest)
         {
@@ -825,14 +827,14 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06 Sharp.xlsb", Password:"123");
+                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06 Sharp.xlsb", Password: "123");
             }
             Worksheet ws = new Worksheet();
             if (istest) ws = wb.Worksheets["QWPJ"];
             else ws = wb.Worksheets["TEST"];
             Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
-            var KSSArray = (object[,])(ws.get_Range("C5:BC5", last)).Value;
-            for (int i = 1; i < KSSArray.GetUpperBound(0)-1; i++)
+            var KSSArray = (object[,])(ws.get_Range("C11:BC11", last)).Value;
+            for (int i = 1; i < KSSArray.GetUpperBound(0) - 1; i++)
             {
                 KSSBase.Add(new KSS());
                 KSSBase[i - 1].WelderName = Convert.ToString(KSSArray[i, 1]);
@@ -840,7 +842,7 @@ namespace ExcelAddProject
                 KSSBase[i - 1].KSSNumber = Convert.ToString(KSSArray[i, 2]);
                 KSSBase[i - 1].Diametermm = (double)KSSArray[i, 15];
                 KSSBase[i - 1].Diameterinch = Convert.ToString(KSSArray[i, 14]);
-                KSSBase[i - 1].Thikness = (double)KSSArray[i, 16];
+                KSSBase[i - 1].Thickness.EnterThickness = Convert.ToString(KSSArray[i, 16]);
                 KSSBase[i - 1].Material1 = Convert.ToString(KSSArray[i, 7]);
                 KSSBase[i - 1].MaterialHeat1 = Convert.ToString(KSSArray[i, 10]);
                 KSSBase[i - 1].MaterialPNo1 = Convert.ToString(KSSArray[i, 8]);
@@ -901,8 +903,78 @@ namespace ExcelAddProject
             var KSSArray = (object[,])(ws.get_Range("C5:BC8", last)).Value;
             return WPSBase;
         }
+        public static void WeldQual()
+        {
+            Application xlApp = (Application)ExcelDnaUtil.Application;
+            xlApp.DisplayAlerts = false;
+            Workbook wb;
+            if (((Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")).Workbooks.Cast<Workbook>().FirstOrDefault(x => x.Name == "Wb сборка.xlsx") != null)
+            {
+                wb = xlApp.Workbooks["Wb сборка.xlsx"];
+            }
+            else
+            {
+                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Wb сборка.xlsx");
+            }
+            ((Worksheet)wb.Worksheets["All"]).AutoFilter.ShowAllData();
+            Range Selection = (((Worksheet)wb.Worksheets["All"]).ListObjects["All"].HeaderRowRange.Find("Resultat"));
+            ((Worksheet)wb.Worksheets["Workshop"]).ListObjects["Workshop"].QueryTable.Refresh(false);
+            ((Worksheet)wb.Worksheets["Erection"]).ListObjects["Erection"].QueryTable.Refresh(false);
+            ((Worksheet)wb.Worksheets["Flare"]).ListObjects["Flare"].QueryTable.Refresh(false);
+            ((Worksheet)wb.Worksheets["All"]).ListObjects["All"].QueryTable.Refresh(false);
+            string Numberum = Selection.Address[false, false, XlReferenceStyle.xlA1, false];
+            if ((((Worksheet)wb.Worksheets["All"]).ListObjects["All"].Range.Rows.Count - Selection.End[XlDirection.xlDown].Row) > 1)
+            {
+                Selection = Selection.get_Offset(1, 0);
+                Selection = Selection.get_Resize(1, Selection.Column + Selection.End[XlDirection.xlToRight].Column);
+                Selection.Copy();
+                Selection = Selection.get_Offset(Selection.End[XlDirection.xlDown].Row - Selection.Row, 0);
+                Selection = Selection.get_Resize(Selection.End[XlDirection.xlDown].Row - Selection.Row + 1, Selection.Columns.Count);
+                Selection.Select();
+                ((Worksheet)xlApp.ActiveSheet).Paste();
+                ((Worksheet)xlApp.ActiveSheet).Calculate();
+            }
+            if (((Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")).Workbooks.Cast<Workbook>().FirstOrDefault(x => x.Name == "FM-401.06.xlsb") != null)
+            {
+                wb = xlApp.Workbooks["FM-401.06.xlsb"];
+            }
+            else
+            {
+                wb = xlApp.Workbooks.Open(Filename : @"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06.xlsb", ReadOnly : true);
+            }
+            Worksheet ws = wb.Worksheets["QualList"];
+            ws.Calculate();
+            ws.Copy();
+            wb = xlApp.ActiveWorkbook;
+            ws = wb.Worksheets["QualList"];
+            ws.ShowAllData();
+            ws.Columns.EntireColumn.Hidden = false;
+            Range wr = ws.get_Range("a1").EntireRow.EntireColumn;
+            wr.Copy();
+            ws.get_Range("a1").Select();
+            xlApp.Selection.PasteSpecial(XlPasteType.xlPasteValues);
+            ws.Columns["AV:BE"].Delete();
+            ws.Columns["AR"].Delete();
+            ws.Columns["AD:AP"].Delete();
+            ws.Columns["H"].Delete();
+            ws.Columns["G"].Delete();
+            ws.Columns["A"].Delete();
+            DateTime dt = DateTime.Now;
+            xlApp.Workbooks["FM-401.06.xlsb"].Close();
+            if (((Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")).Workbooks.Cast<Workbook>().FirstOrDefault(x => x.Name == "Wb сборка.xlsx") != null)
+            {
+                xlApp.Workbooks["Wb сборка.xlsx"].Close();
+            }
+            wb.SaveAs(Filename: @"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\отчеты\QualList\QualList " + dt.ToShortDateString() + ".xlsx");
+            wb.Close();           
+            xlApp.DisplayAlerts = true;
+            Marshal.ReleaseComObject(ws);
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(xlApp);
+           
+        }
     }
-   
+
     //public class DataWriter
     //{
     //    public static void WriteData()
