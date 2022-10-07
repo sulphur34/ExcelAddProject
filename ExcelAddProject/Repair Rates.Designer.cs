@@ -45,6 +45,7 @@
             this.cbDiameter = new System.Windows.Forms.CheckBox();
             this.cbRepairValid = new System.Windows.Forms.CheckBox();
             this.cbVolume = new System.Windows.Forms.CheckBox();
+            this.cbNoDivision = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -171,27 +172,29 @@
             // cbDiameter
             // 
             this.cbDiameter.AutoSize = true;
-            this.cbDiameter.Location = new System.Drawing.Point(152, 142);
+            this.cbDiameter.Location = new System.Drawing.Point(152, 144);
             this.cbDiameter.Name = "cbDiameter";
             this.cbDiameter.Size = new System.Drawing.Size(141, 17);
             this.cbDiameter.TabIndex = 14;
             this.cbDiameter.Text = "Не учитывать диаметр";
             this.cbDiameter.UseVisualStyleBackColor = true;
+            this.cbDiameter.CheckedChanged += new System.EventHandler(this.cbDiameter_CheckedChanged);
             // 
             // cbRepairValid
             // 
             this.cbRepairValid.AutoSize = true;
-            this.cbRepairValid.Location = new System.Drawing.Point(152, 167);
+            this.cbRepairValid.Location = new System.Drawing.Point(152, 190);
             this.cbRepairValid.Name = "cbRepairValid";
             this.cbRepairValid.Size = new System.Drawing.Size(143, 17);
             this.cbRepairValid.TabIndex = 15;
             this.cbRepairValid.Text = "Не учитывать ремонты";
             this.cbRepairValid.UseVisualStyleBackColor = true;
+            this.cbRepairValid.CheckedChanged += new System.EventHandler(this.cbRepairValid_CheckedChanged);
             // 
             // cbVolume
             // 
             this.cbVolume.AutoSize = true;
-            this.cbVolume.Location = new System.Drawing.Point(76, 167);
+            this.cbVolume.Location = new System.Drawing.Point(12, 190);
             this.cbVolume.Name = "cbVolume";
             this.cbVolume.Size = new System.Drawing.Size(61, 17);
             this.cbVolume.TabIndex = 16;
@@ -199,11 +202,23 @@
             this.cbVolume.UseVisualStyleBackColor = true;
             this.cbVolume.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
+            // cbNoDivision
+            // 
+            this.cbNoDivision.AutoSize = true;
+            this.cbNoDivision.Location = new System.Drawing.Point(152, 167);
+            this.cbNoDivision.Name = "cbNoDivision";
+            this.cbNoDivision.Size = new System.Drawing.Size(146, 17);
+            this.cbNoDivision.TabIndex = 17;
+            this.cbNoDivision.Text = "Не разделять контроль";
+            this.cbNoDivision.UseVisualStyleBackColor = true;
+            this.cbNoDivision.CheckedChanged += new System.EventHandler(this.cbNoDivision_CheckedChanged);
+            // 
             // RepairForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 196);
+            this.ClientSize = new System.Drawing.Size(300, 211);
+            this.Controls.Add(this.cbNoDivision);
             this.Controls.Add(this.cbVolume);
             this.Controls.Add(this.cbRepairValid);
             this.Controls.Add(this.cbDiameter);
@@ -243,5 +258,6 @@
         private System.Windows.Forms.CheckBox cbDiameter;
         private System.Windows.Forms.CheckBox cbRepairValid;
         private System.Windows.Forms.CheckBox cbVolume;
+        private System.Windows.Forms.CheckBox cbNoDivision;
     }
 }

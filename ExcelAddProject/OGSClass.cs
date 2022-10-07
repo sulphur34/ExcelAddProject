@@ -9,10 +9,10 @@ namespace ExcelAddProject
 {
     public class RatesContainerCOK
     {
-        public int Overall = 0;
-        public int NDEOverall = 0;
-        public int NDEDone = 0;
-        public int NDEReject = 0;
+        public double Overall = 0;
+        public double NDEOverall = 0;
+        public double NDEDone = 0;
+        public double NDEReject = 0;
     }
 
     public class RatesContainer
@@ -59,6 +59,7 @@ namespace ExcelAddProject
         public List<KSS> TestKSS = new List<KSS>();
         public List<RatesContainer> WelderRates = new List<RatesContainer>(16);
         public List<TimelineRates> TimelineRates = new List<TimelineRates>();
+        public List<QualSimp> QualSimpl = new List<QualSimp>();
         public Welder()
         {
             for (int i = 0; i < 16; i++)
@@ -86,7 +87,7 @@ namespace ExcelAddProject
         public object ISONum, DrawingNum, WeldNumber, WeldMaterial, RTProtNum, UTProtNum, WeldProcess, Result, RTDate, UTDate, Object;
         public bool NDEcontrol, IsRepair;
         public List<string> Welders, WeldersToBlame = new List<string>();
-        public double WeldDiam, WeldThick;
+        public double WeldDiam, WeldThick, WeldDiamInch;
         public DateTime EndDate = new DateTime();
     }
     public class KSS
@@ -95,7 +96,7 @@ namespace ExcelAddProject
         public string Stamp;
         public string KSSNumber;
         public double Diameter;
-        public double Thikness;
+        public Thickness Thickness = new Thickness();
         public string Material;
         public string MaterialHeat;
         public string MaterialGroup;
@@ -145,6 +146,50 @@ namespace ExcelAddProject
         public string Bend;
         public string Macro;
     }
+    public class Thickness
+    {
+        public string EnterThickness;
+        public double WelderThick()
+        {
+            char open = '(';
+            char close = ')';
+            if (EnterThickness.Contains(open) & EnterThickness.Contains(close))
+            {
+                return Convert.ToDouble(EnterThickness.Substring(EnterThickness.IndexOf(open) + 1, EnterThickness.IndexOf(open)-EnterThickness.IndexOf(close)-1)) ;
+            }
+            else
+            return Convert.ToDouble(EnterThickness);
+        }
+        public double FullThick()
+        {
+            char open = '(';
+            char close = ')';
+            if (EnterThickness.Contains(open) & EnterThickness.Contains(close))
+            {
+                return Convert.ToDouble(EnterThickness.Substring(0, EnterThickness.Length - EnterThickness.IndexOf(open) - 1));
+            }
+            else
+                return Convert.ToDouble(EnterThickness);
+        }
+
+    }
+    public class QualSimp
+    {
+        public string WelderName;
+        public string Stamp;
+        public string DLname;
+        public DateTime Dlstart;
+        public DateTime Dlend;
+        public string KSSProcess;
+        public string WelderProcess;
+        public string WeldLayers;
+        public string Position;
+        public QualDimentions QualDimentions = new QualDimentions();
+        public QualPositions QualPositions = new QualPositions();
+        public QualMaterials QualMaterials = new QualMaterials();
+        public string MaterialGroup;
+        public string ObjectType;
+    }
     public class Qualification
     {
         public string WelderName;
@@ -158,26 +203,26 @@ namespace ExcelAddProject
         public QualDimentions QualDimentions = new QualDimentions();
         public QualPositions QualPositions = new QualPositions();
         public QualMaterials QualMaterials = new QualMaterials();
-        public string VTprotocolNumber;
-        public DateTime VTprotocolDate;
-        public string NDTprotocolNumber;
-        public DateTime NDTprotocolDate;
-        public string NDTType;
-        public string MECHprotocolNumber;
-        public DateTime MECHprotocolDate;
-        public string StringBendresult;
-        public string Hardnessresult;
-        public string Impactresult;
-        public string TPB309number;
-        public DateTime TPB309date;
+        //public string VTprotocolNumber;
+        //public DateTime VTprotocolDate;
+        //public string NDTprotocolNumber;
+        //public DateTime NDTprotocolDate;
+        //public string NDTType;
+        //public string MECHprotocolNumber;
+        //public DateTime MECHprotocolDate;
+        //public string StringBendresult;
+        //public string Hardnessresult;
+        //public string Impactresult;
+        //public string TPB309number;
+        //public DateTime TPB309date;
         public string ObjectType;
     }
     public class QualDimentions
     {
-        public object DiameterMin;
-        public object DiameterMax;
-        public object ThiknessMin;
-        public object ThiknessMax;
+        public double DiameterMin;
+        public double DiameterMax;
+        public double ThiknessMin;
+        public double ThiknessMax;
         //public QualDimentions GetQualDim(double Diameter, double Thikness, string Procedure)
         //    {        
         //    }
@@ -185,6 +230,188 @@ namespace ExcelAddProject
     public class QualPositions
     {
         public string QualPosition;
+        public string QualPositionsString;
+        public string[] QualifacatedPositions(string KSSType, string WeldType, string QualType)
+        {
+            string[] QualArray = new string[5]; 
+            switch (QualType)
+            {
+                case "ASME":
+                    switch (KSSType)
+                    {
+                        case "Pipe":
+                            switch (WeldType)
+                            {
+                                case "Groove":
+                                    switch (QualPosition)
+                                    {
+                                        case "1G":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2G":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "5G":
+                                            QualArray = new string[] { "F", "V", "O" };
+                                            break;
+                                        case "6G":
+                                            QualArray = new string[] { "F", "V", "H", "O" };
+                                            break;
+                                    }
+                                    break;
+                                case "Fillet":
+                                    switch (QualPosition)
+                                    {
+                                        case "1F":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2F":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "2FR":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "4F":
+                                            QualArray = new string[] { "F", "H", "O" };
+                                            break;
+                                        case "5F":
+                                            QualArray = new string[] { "F", "V", "H", "O" };
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case "Plate":
+                            switch (WeldType)
+                            {
+                                case "Groove":
+                                    switch (QualPosition)
+                                    {
+                                        case "1G":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2G":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "3G":
+                                            QualArray = new string[] { "F", "V" };
+                                            break;
+                                        case "4G":
+                                            QualArray = new string[] { "F", "O" };
+                                            break;
+                                    }
+                                    break;
+                                case "Fillet":
+                                    switch (QualPosition)
+                                    {
+                                        case "1F":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2F":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "3F":
+                                            QualArray = new string[] { "F", "H", "V" };
+                                            break;
+                                        case "4F":
+                                            QualArray = new string[] { "F", "H", "O" };
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+                case "AWS":
+                    switch (KSSType)
+                    {
+                        case "Pipe":
+                            switch (WeldType)
+                            {
+                                case "Groove":
+                                    switch (QualPosition)
+                                    {
+                                        case "1G":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2G":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "5G":
+                                            QualArray = new string[] { "F", "V", "OH" };
+                                            break;
+                                        case "6G":
+                                            QualArray = new string[] { "F", "V", "H", "OH" };
+                                            break;
+                                    }
+                                    break;
+                                case "Fillet":
+                                    switch (QualPosition)
+                                    {
+                                        case "1F":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2F":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "4F":
+                                            QualArray = new string[] { "F", "H", "OH" };
+                                            break;
+                                        case "5F":
+                                            QualArray = new string[] { "F", "H", "OH" };
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case "Plate":
+                            switch (WeldType)
+                            {
+                                case "Groove":
+                                    switch (QualPosition)
+                                    {
+                                        case "1G":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2G":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "3G":
+                                            QualArray = new string[] { "F", "V", "H" };
+                                            break;
+                                        case "4G":
+                                            QualArray = new string[] { "F", "OH" };
+                                            break;
+                                    }
+                                    break;
+                                case "Fillet":
+                                    switch (QualPosition)
+                                    {
+                                        case "1F":
+                                            QualArray = new string[] { "F" };
+                                            break;
+                                        case "2F":
+                                            QualArray = new string[] { "F", "H" };
+                                            break;
+                                        case "3F":
+                                            QualArray = new string[] { "F", "H", "V" };
+                                            break;
+                                        case "4F":
+                                            QualArray = new string[] { "F", "H", "OH" };
+                                            break;
+                                    }
+                                    break;                                
+                            }
+                            break;
+                    }                    
+                    break;
+                default:
+                    QualArray = new string[] { "error" };
+                    break;
+            }
+            return QualArray;
+        }
+        
     }
     public class QualMaterials
     {
@@ -219,5 +446,9 @@ namespace ExcelAddProject
         string AWSClass;
         string Name;
         string Size;    
+    }
+    public class Tools
+    { 
+    
     }
 }
