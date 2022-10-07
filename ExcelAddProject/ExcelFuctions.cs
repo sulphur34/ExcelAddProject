@@ -24,7 +24,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Wb сборка.xlsx");
+                wb = xlApp.Workbooks.Open(@"pathWB");
             }
             ((Worksheet)wb.Worksheets["All"]).AutoFilter.ShowAllData();
             Range Selection = (((Worksheet)wb.Worksheets["All"]).ListObjects["All"].HeaderRowRange.Find("Resultat"));
@@ -111,7 +111,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Repair Rate Sharp.xlsb");
+                wb = xlApp.Workbooks.Open(@"pathRepairRates");
             }
             Worksheet ws = new Worksheet();
             ws = wb.Worksheets[ReportType];
@@ -232,7 +232,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Repair Rate Sharp.xlsb");
+                wb = xlApp.Workbooks.Open(@"pathRepairRates");
             }
             Worksheet ws = new Worksheet();
             ws = wb.Worksheets["Timeline"];
@@ -355,7 +355,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Repair Rate Sharp.xlsb");
+                wb = xlApp.Workbooks.Open(@"pathRepairRates");
             }
             ((Worksheet)wb.Worksheets["ПБР Тенгиз"]).Activate();
             foreach (KeyValuePair<string, RatesContainerCOK> RatesContainer in RatesContainerCOKMonth)
@@ -702,7 +702,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06.xlsb", Password: "123", ReadOnly: true);
+                wb = xlApp.Workbooks.Open(@"pathFMQuals", Password: "password", ReadOnly: true);
             }
             Worksheet ws = wb.Worksheets["QualList"];
             Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
@@ -746,7 +746,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06 Sharp.xlsb", Password: "123");
+                wb = xlApp.Workbooks.Open(@"pathFBQuals", Password: "password");
             }
             Worksheet ws = new Worksheet();
             if (istest) ws = wb.Worksheets["QWPJ"];
@@ -813,7 +813,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\009-WPQr_WPS\002-WPQr_WPS(р) ПБР Тенгиз 3GI\2. WPS\WPS LTCS, SS, ALLOY, F22.xlsx");
+                wb = xlApp.Workbooks.Open(@"pathProcesses");
             }
             Worksheet ws = wb.Worksheets["List PQR"];
             Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
@@ -831,7 +831,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Wb сборка.xlsx");
+                wb = xlApp.Workbooks.Open(@"pathWB");
             }
             ((Worksheet)wb.Worksheets["All"]).AutoFilter.ShowAllData();
             Range Selection = (((Worksheet)wb.Worksheets["All"]).ListObjects["All"].HeaderRowRange.Find("Resultat"));
@@ -857,7 +857,7 @@ namespace ExcelAddProject
             }
             else
             {
-                wb = xlApp.Workbooks.Open(Filename : @"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\FM-401.06.xlsb", ReadOnly : true);
+                wb = xlApp.Workbooks.Open(Filename : @"pathFMQuals", ReadOnly : true);
             }
             Worksheet ws = wb.Worksheets["QualList"];
             ws.Calculate();
@@ -886,7 +886,7 @@ namespace ExcelAddProject
             {
                 xlApp.Workbooks["Wb сборка.xlsx"].Close();
             }
-            wb.SaveAs(Filename: @"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\004-qualifications\отчеты\QualList\QualList " + dt.ToShortDateString() + ".xlsx");
+            wb.SaveAs(Filename: @"pathQuallistOutput" " + dt.ToShortDateString() + ".xlsx");
             wb.Close();           
             xlApp.DisplayAlerts = true;
             Marshal.ReleaseComObject(ws);
