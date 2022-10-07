@@ -10,33 +10,7 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelAddProject
 {
-    //public static class MyFunctions
-    //{
-    //    [ExcelFunction(Description = "My first Excel-DNA function")]
-    //    public static string MyFirstFunction(string name)
-    //    {
-    //        return "Hello " + name;
-    //    }
-    //    [ExcelFunction(Description = "Joins a string to a number", Category = "My functions")]
-    //    public static string JoinThem([ExcelArgument(Description = "Input string",Name = "Word",AllowReference =true)] string str, [ExcelArgument(Description = "Input number", AllowReference = true)] double val)
-    //    {
-    //        return str + val;
-    //    }
-    //    [ExcelFunction(Description = "Multiplies two numbers", Category = "Useful functions")]
-    //    public static double MultiplyThem(double x, double y)
-    //    {
-    //        return x * y;
-    //    }
-    //    [ExcelFunction(Description = "A useful test function that adds two numbers, and returns the sum.")]
-    //    public static double AddThem(
-    //[ExcelArgument(Name = "Augend", Description = "is the first number, to which will be added")]
-    //double v1,
-    //[ExcelArgument(Name = "Addend", Description = "is the second number that will be added")]
-    //double v2)
-    //    {
-    //        return v1 + v2;
-    //    }
-    //}
+    
     public class RepairRates
     {
         public static List<Weld> WeldData(bool WBcalc, bool Official)
@@ -52,8 +26,6 @@ namespace ExcelAddProject
             {
                 wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Wb сборка.xlsx");
             }
-            //System.Windows.Forms.DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Хотите обновить WB сборку перед расчетом брака", "Repair Rate Counter 9000", System.Windows.Forms.MessageBoxButtons.YesNo);
-            //if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             ((Worksheet)wb.Worksheets["All"]).AutoFilter.ShowAllData();
             Range Selection = (((Worksheet)wb.Worksheets["All"]).ListObjects["All"].HeaderRowRange.Find("Resultat"));
             if (WBcalc)
@@ -93,40 +65,11 @@ namespace ExcelAddProject
                 ((Worksheet)xlApp.ActiveSheet).Paste();
                 ((Worksheet)xlApp.ActiveSheet).Calculate();
             }
-            //else if (dialogResult == System.Windows.Forms.DialogResult.No)
-            //{
-
-            //}
+            
             Worksheet ws = wb.Worksheets["All"];
             ListObject WeldingBook = ws.ListObjects["All"];
             var WBarray = (object[,])WeldingBook.DataBodyRange.Value;
             List<Weld> WBook = new List<Weld>();
-            //Workbook wb = xlApp.ActiveWorkbook;
-            //Worksheet ws = wb.Worksheets[1];
-            //ListObject WeldingBook = ws.ListObjects["All"];
-            //WeldingBook.Range.Select();
-            //List<Range> Base = WeldingBook.DataBodyRange.Rows.Cast<Range>().ToList();
-            //var values = new object[WeldingBook.ListRows.Count, WeldingBook.ListColumns.Count];
-            //values = WeldingBook.DataBodyRange.Value;
-            //for (int i = 0; i < WeldingBook.ListRows.Count; i++)
-            //{
-            //    WBook.Add(new Weld());
-            //    WBook[i].DrawingNum = WeldingBook.DataBodyRange[i + 1, 8].Value2;
-            //    WBook[i].ISONum = WeldingBook.DataBodyRange[i + 1, 9].Value2;
-            //    WBook[i].WeldNumber = WeldingBook.DataBodyRange[i + 1, 26].Value2;
-            //    WBook[i].EndDate = WeldingBook.DataBodyRange[i + 1, 65].Value;
-            //    WBook[i].WeldMaterial = WeldingBook.DataBodyRange[i + 1, 11].Value2;
-            //    WBook[i].WeldDiam = WeldingBook.DataBodyRange[i + 1, 58].Value;
-            //    WBook[i].WeldThick = WeldingBook.DataBodyRange[i + 1, 59].Value;
-            //    WBook[i].WeldProcess = WeldingBook.DataBodyRange[i + 1, 57].Value2;
-            //    WBook[i].Welders = WeldersSeparator(WeldingBook.DataBodyRange[i + 1, 55].Value2);
-            //    WBook[i].WeldersToBlame = WeldersSeparator(WeldingBook.DataBodyRange[i + 1, 56].Value2);
-            //    WBook[i].RTProtNum = WeldingBook.DataBodyRange[i + 1, 20].Value2;
-            //    WBook[i].UTProtNum = WeldingBook.DataBodyRange[i + 1, 24].Value2;
-            //    WBook[i].RTDate = WeldingBook.DataBodyRange[i + 1, 4].Value2;
-            //    WBook[i].UTDate = WeldingBook.DataBodyRange[i + 1, 5].Value2;
-            //    WBook[i].Result = WeldingBook.DataBodyRange[i + 1, 54].Value2;
-            //}
             int Result = 55;
             if (Official) Result = 18;
 
@@ -213,29 +156,6 @@ namespace ExcelAddProject
         }
         public static List<Welder> WeldersRates(List<Weld> WBook, List<Welder> WelderBase)
         {
-            //List<Welder> WelderBase = new List<Welder>();
-            //Application xlApp = (Application)ExcelDnaUtil.Application;
-            //xlApp.DisplayAlerts = false;
-            //Workbook wb;
-            //if (((Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application")).Workbooks.Cast<Workbook>().FirstOrDefault(x => x.Name == "Repair Rate Sharp.xlsb") != null)
-            //{
-            //    wb = xlApp.Workbooks["Repair Rate Sharp.xlsb"];
-            //}
-            //else
-            //{
-            //    wb = xlApp.Workbooks.Open(@"\\veles-srv46-fs\Велесстрой\Служба сварочно-монтажных работ\ОГС\002-repair rates\Repair Rate Sharp.xlsb");
-            //}
-            //Worksheet ws = new Worksheet();
-            //ws = wb.Worksheets[ReportType];
-            //Range last = ws.Cells.SpecialCells(XlCellType.xlCellTypeLastCell, Type.Missing);
-            //Range Weldersrange = ws.get_Range("B8:C8", last);
-            //var WeldersArray = (object[,])Weldersrange.Value;
-            //for (int i = 1; i < WeldersArray.GetUpperBound(0) + 1; i++)
-            //{
-            //    WelderBase.Add(new Welder());
-            //    WelderBase[i - 1].WeldersName = (string)WeldersArray[i, 1];
-            //    WelderBase[i - 1].Stamp = (string)WeldersArray[i, 2];
-            //}
             foreach (Weld ProdWeld in WBook)
             {
                 foreach (Welder WelderUnit in WelderBase)
@@ -463,7 +383,6 @@ namespace ExcelAddProject
             List<string> Materials = new List<string> { "LTCS", "SS", "F22", "ALLOY" };
             List<string> Objects = new List<string> { "Workshop", "Erection" };
             double inchcounter = 1;
-
             foreach (string Material in Materials)
             {
                 foreach (string Object in Objects)
@@ -882,8 +801,6 @@ namespace ExcelAddProject
             }
             return KSSBase;
         }
-        ////public static List<Qualification> GetQualification()
-        ////{ }
         public static List<WPS> GetWPS()
         {
             List<WPS> WPSBase = new List<WPS>();
@@ -947,7 +864,11 @@ namespace ExcelAddProject
             ws.Copy();
             wb = xlApp.ActiveWorkbook;
             ws = wb.Worksheets["QualList"];
-            ws.ShowAllData();
+            try
+            {
+                ws.ShowAllData();
+            }          
+            catch { }
             ws.Columns.EntireColumn.Hidden = false;
             Range wr = ws.get_Range("a1").EntireRow.EntireColumn;
             wr.Copy();
@@ -975,42 +896,5 @@ namespace ExcelAddProject
         }
     }
 
-    //public class DataWriter
-    //{
-    //    public static void WriteData()
-    //    {
-    //        Application xlApp = (Application)ExcelDnaUtil.Application;
-
-    //        Workbook wb = xlApp.ActiveWorkbook;
-    //        if (wb == null)
-    //            return;
-
-    //        Worksheet ws = wb.Worksheets.Add(Type: XlSheetType.xlWorksheet);
-    //        ws.Range["A1"].Value = "Date";
-    //        ws.Range["B1"].Value = "Value";
-
-    //        Range headerRow = ws.Range["A1", "B1"];
-    //        headerRow.Font.Size = 12;
-    //        headerRow.Font.Bold = true;
-
-    //        // Generally it's faster to write an array to a range
-    //        var values = new object[100, 2];
-    //        var startDate = new DateTime(2007, 1, 1);
-    //        var rand = new Random();
-    //        for (int i = 0; i < 100; i++)
-    //        {
-    //            values[i, 0] = startDate.AddDays(i);
-    //            values[i, 1] = rand.NextDouble();
-    //        }
-
-    //        ws.Range["A2"].Resize[100, 2].Value = values;
-    //        ws.Columns["A:A"].EntireColumn.AutoFit();
-
-    //        // Add a chart
-    //        Range dataRange = ws.Range["A1:B101"];
-    //        dataRange.Select();
-    //        ws.Shapes.AddChart(XlChartType.xlLineMarkers).Select();
-    //        xlApp.ActiveChart.SetSourceData(Source: dataRange);
-    //    }
-    //}
+    
 }
